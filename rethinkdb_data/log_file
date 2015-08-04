@@ -1,0 +1,28 @@
+2015-08-03T22:23:03.687477241 0.353757s notice: Recursively removing directory /home/peter/CP2020_Play_Assistant/rethinkdb_data/tmp
+2015-08-03T22:23:03.708472589 0.374753s notice: Initializing directory /home/peter/CP2020_Play_Assistant/rethinkdb_data
+2015-08-03T22:23:03.708572676 0.374851s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/home/peter/CP2020_Play_Assistant/rethinkdb_data' did not already exist or is empty.)
+2015-08-03T22:23:03.708589532 0.374868s notice: Running rethinkdb 2.0.4~0vivid (GCC 4.9.2)...
+2015-08-03T22:23:03.712098541 0.378379s notice: Running on Linux 3.19.0-25-generic x86_64
+2015-08-03T22:23:03.712148885 0.378427s notice: Loading data from directory /home/peter/CP2020_Play_Assistant/rethinkdb_data
+2015-08-03T22:23:04.153380215 0.819660s info: Automatically using cache size of 6425 MB
+2015-08-03T22:23:04.153964062 0.820243s error: TCP socket creation failed for port 29015: Address already in use.
+2015-08-03T22:23:17.952167782 0.025410s notice: Running rethinkdb 2.0.4~0vivid (GCC 4.9.2)...
+2015-08-03T22:23:17.954687152 0.027929s notice: Running on Linux 3.19.0-25-generic x86_64
+2015-08-03T22:23:17.954751498 0.027992s notice: Loading data from directory /home/peter/CP2020_Play_Assistant/rethinkdb_data
+2015-08-03T22:23:18.096010309 0.169252s info: Automatically using cache size of 6433 MB
+2015-08-03T22:23:18.096897336 0.170138s error: TCP socket creation failed for port 29015: Address already in use.
+2015-08-03T22:23:20.238392700 0.029626s notice: Running rethinkdb 2.0.4~0vivid (GCC 4.9.2)...
+2015-08-03T22:23:20.241567223 0.032801s notice: Running on Linux 3.19.0-25-generic x86_64
+2015-08-03T22:23:20.241672528 0.032904s notice: Loading data from directory /home/peter/CP2020_Play_Assistant/rethinkdb_data
+2015-08-03T22:23:20.387869083 0.179101s info: Automatically using cache size of 6434 MB
+2015-08-03T22:23:20.388572724 0.179804s error: TCP socket creation failed for port 29015: Address already in use.
+2015-08-03T22:23:27.034298609 0.006659s notice: Running rethinkdb 2.0.4~0vivid (GCC 4.9.2)...
+2015-08-03T22:23:27.036621627 0.008981s notice: Running on Linux 3.19.0-25-generic x86_64
+2015-08-03T22:23:27.036675108 0.009033s notice: Loading data from directory /home/peter/CP2020_Play_Assistant/rethinkdb_data
+2015-08-03T22:23:27.196423397 0.168782s info: Automatically using cache size of 6433 MB
+2015-08-03T22:23:27.197149728 0.169508s error: TCP socket creation failed for port 29015: Address already in use.
+2015-08-03T22:24:58.211910179 0.006871s notice: Running rethinkdb 2.0.4~0vivid (GCC 4.9.2)...
+2015-08-03T22:24:58.214631085 0.009594s notice: Running on Linux 3.19.0-25-generic x86_64
+2015-08-03T22:24:58.214743615 0.009702s notice: Loading data from directory /home/peter/CP2020_Play_Assistant/rethinkdb_data
+2015-08-03T22:24:58.361034950 0.155994s info: Automatically using cache size of 6423 MB
+2015-08-03T22:24:58.361736890 0.156695s error: TCP socket creation failed for port 29015: Address already in use.
