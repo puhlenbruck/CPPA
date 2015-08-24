@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Register</h2>
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('signup') }}" method=post>
+  {{form.hidden_tag()}}
+    <p>
+        <h4>Username</h4>
+        {{form.username}}
+        <h4>Password</h4>
+        {{form.password}}
+        <h4>Confirm Password</h4>
+        {{form.password_confirm}}
+        </br>
+        <input type=submit value=Register>
+    </p>
+  </form>
+{% endblock %}

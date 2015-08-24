@@ -9,6 +9,6 @@ class LoginForm(Form):
 
 class RegisterForm(Form):
     username = TextField('username', validators = [Required()])
-	password = PasswordField('password', validators = [Required()])
-	password_confirm = PasswordField('password', validators = [Required()])
+    password = PasswordField('password', validators = [Required()])
+    password_confirm = PasswordField('password', validators = [Required()])
 	

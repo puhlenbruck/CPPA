@@ -12,10 +12,35 @@
     </style>
   </head>
   <body>
-  	<div class="container">
-    	{% block content %}{% endblock %}
-    </div>
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-  </body>
+    <header>
+        <h1>{{ self.title() }}</h1>
+        <h2 style="color:red"><strong>WARNING: </strong><i>This site is still under development.  Our database can and will be reset without notice, erasing all data, including user accounts.  Feel free to poke around and have fun, but be aware that things could be drastically diferent the next time you are here, and there are no guarentees things will be saved.</i></h2>
+        <nav>
+        <ul>
+        <li><a href="/">Home</a></li>
+        <li>
+	        {% if current_user.is_anonymous() %}
+	            <a href="{{url_for('signup')}}">Register</a> / <a href="{{url_for       ('login')}}">Log In</a>
+	        {% else %}
+	            Logged in as {{current_user.name}} <a href="{{url_for('users.logout')}}">Logout</a>
+	        {% endif %}
+        </li>
+        </ul>
+        </nav>
+     </header>
+    {% set messages = get_flashed_messages() %}
+    {% if messages %}
+        <section>
+	        {% for message in messages %}
+	            <p>{{ message }}</p>
+	        {% endfor %}
+        </section>
+    {% endif %}
+    <section>
+  	    <div class="container">
+       	  {% block content %}{% endblock %}
+        </div>
+        <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    </body>
 </html>
