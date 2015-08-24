@@ -1,26 +1,11 @@
-from flask import render_template, url_for, redirect, g, abort
+from flask import render_template, url_for, redirect, g, abort, Markup, Blueprint, flash, jsonify, request
 from app import app
 from forms import TaskForm
 import rethinkdb as r
-from rethinkdb.errors import RqlRuntimeError
+from config import RDB_HOST, RDB_PORT, CP2020_DB
 
-# rethink config
-RDB_HOST = 'localhost'
-RDB_PORT = 28015
-CP2020_DB = 'cyberpunk'
 
-# db setup; only run once
-def dbSetup():
-    connection = r.connect(host=RDB_HOST, port=RDB_PORT)
-    try:
-        r.db_create(CP2020_DB).run(connection)
-        r.db(CP2020_DB).table_create('test').run(connection)
-        print 'Database setup completed'
-    except RqlRuntimeError:
-        print 'Database already exists.'
-    finally:
-        connection.close()
-dbSetup()
+
 
 # open connection before each request
 @app.before_request
@@ -45,4 +30,7 @@ def index():
 		r.table('test').insert({"name":form.label.data}).run(g.rdb_conn)
 		return redirect(url_for('index'))
 	selection = list(r.table('test').run(g.rdb_conn))
-	return render_template('index.html', form = form, tasks = selection)
+	return render_template('index.html', title = 'Cyberpunk2020', form = form, tasks = selection)
+
+
+_LINK = Markup('<a href="{url}">{name}</a>')
