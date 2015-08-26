@@ -32,7 +32,7 @@ def dbCreate(connection):
 
 # DANGEROUS
 # drop everything and create a new, empty database      
-def dbReset():
+def db_reset():
     if yn_choice("Are you sure you wish to reset the Database?\nAll data will be lost and this cannot be undone.", 'n'):
         connection = r.connect(host=RDB_HOST, port=RDB_PORT, db=CP2020_DB)
         try:
