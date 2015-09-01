@@ -4,21 +4,13 @@ import rethinkdb as r
 
 class User(object):
     data = []
-    auth = False
-    anon = False
     
     
-    def __init__(self, db_data, authenticated=False, anonymous=False):
+    def __init__(self, db_data):
         self.data = db_data
-        self.auth = authenticated
-        self.anon = anonymous
-    
+
+
     def __getitem__(self, key):
-        if key == 'auth':
-            return self.auth
-        elif key == 'anon':
-            return self.anon
-        else:
             return self.data[key]
     
     def get_data(self):
@@ -26,9 +18,12 @@ class User(object):
     
     def is_active(self):
         return self.data['active']
+        
+    def is_authenticated(self):
+        return True
      
     def is_anonymous(self):
-        return self.anon
+        return False
         
     def get_id(self):
         return self.data['id']

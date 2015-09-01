@@ -1,11 +1,8 @@
-from flask import render_template, url_for, redirect, g, abort, Markup, Blueprint, flash, jsonify, request
+from flask import render_template, url_for, redirect, g, abort, flash, request, abort
+from flask.ext.login import login_required, current_user
 from app import app
-from forms import TaskForm
 import rethinkdb as r
 from config import RDB_HOST, RDB_PORT, CP2020_DB
-
-
-
 
 # open connection before each request
 @app.before_request
@@ -22,15 +19,13 @@ def teardown_request(exception):
         g.rdb_conn.close()
     except AttributeError:
         pass
-
-@app.route('/', methods = ['GET', 'POST'])
-def index():
-	form = TaskForm()
-	if form.validate_on_submit():
-		r.table('test').insert({"name":form.label.data}).run(g.rdb_conn)
-		return redirect(url_for('index'))
-	selection = list(r.table('test').run(g.rdb_conn))
-	return render_template('index.html', form = form, tasks = selection)
-
-
-_LINK = Markup('<a href="{url}">{name}</a>')
+        
+@app.route('/characters/', methods = ['GET'])
+@login_required
+def character_index():
+    return render_template('characterindex.html')
+    
+@app.route('/characters/new', methods = ['GET'])
+@login_required
+def character_create():
+    return render_template('characterindex.html')

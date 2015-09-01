@@ -5,7 +5,7 @@ from app.users.models import load_username, User
 import rethinkdb as r
 
 login_manager = LoginManager()
-login_manager.login_view = "users.login"
+login_manager.login_view = "login"
 salt_size = 128
 hash_size = 128
 cpu_cost = 32768
@@ -23,7 +23,6 @@ def load_user(user_id):
 def validate_credentials(username, password):
     user = load_username(username)
     if user != None:
-        print 'user loaded'
         if validate_password(user, password):
             return user
         else: 

@@ -7,6 +7,7 @@ app.config.from_pyfile('../config.py')
 CsrfProtect(app)
 from .index import views
 from .users import views, models
+from .characters import views
 from .auth import login_manager
 login_manager.init_app(app)
 

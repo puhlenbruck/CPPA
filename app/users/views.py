@@ -1,5 +1,5 @@
 from flask import render_template, url_for, redirect, g, abort, flash, request, abort
-from flask.ext.login import login_user, logout_user, current_user
+from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app
 import rethinkdb as r
 from config import RDB_HOST, RDB_PORT, CP2020_DB
@@ -28,10 +28,14 @@ def teardown_request(exception):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        if not current_user.is_anonymous():
+            logout_user()
         user = validate_credentials(form.username.data, form.password.data)
         if user is not None:
             
             login_user(user)
+            print user.is_authenticated()
+            print current_user.is_authenticated()
             flash('You were logged in')
             next = request.args.get('next')
             if not next_is_valid(next):
@@ -47,8 +51,10 @@ def next_is_valid(next):
     
 
 @app.route('/logout/', methods = ['GET'])
+@login_required
 def logout():
     logout_user()
+    flash('You were logged out')
     return redirect(url_for('index'))
 
   
