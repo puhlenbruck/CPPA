@@ -40,6 +40,7 @@ def create_new_user(username, password_hash,salt):
     if not confirm_unique_username:
         return None
     user = {'username':username, 'password':password_hash, 'salt':salt, 'active':True}
+    user['characters'] = []
     r.table('users').insert(user).run(g.rdb_conn)
     return load_username(user['username'])
     

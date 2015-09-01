@@ -3,7 +3,7 @@ from rethinkdb.errors import RqlRuntimeError
 from app.config import RDB_HOST, RDB_PORT, CP2020DB
 
 
-TABLE_NAMES = ['test', 'users']
+TABLE_NAMES = ['test', 'users', 'characters']
 
 # db setup; only run once
 def dbSetup():
@@ -26,6 +26,9 @@ def table_create(connection):
 def table_options(connection):
     r.table('users').index_create('username').run(connection)
     print 'username index added'
+    r.table('characters').index_create('name').run(connection)
+    print 'character name index added'
+    
 
 def db_create(connection):
     try:

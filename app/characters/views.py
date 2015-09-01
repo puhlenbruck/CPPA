@@ -23,7 +23,12 @@ def teardown_request(exception):
 @app.route('/characters/', methods = ['GET'])
 @login_required
 def character_index():
-    return render_template('characterindex.html')
+    user_char_ids = current_user.get_data()['characters']
+    chars = []
+    for char_id in user_char_ids:
+        character = r.table('characters').get('id').run(g.rdb_conn)
+        chars.append(character)
+    return render_template('characterindex.html', characters = chars)
     
 @app.route('/characters/new', methods = ['GET'])
 @login_required

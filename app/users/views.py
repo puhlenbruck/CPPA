@@ -34,8 +34,6 @@ def login():
         if user is not None:
             
             login_user(user)
-            print user.is_authenticated()
-            print current_user.is_authenticated()
             flash('You were logged in')
             next = request.args.get('next')
             if not next_is_valid(next):

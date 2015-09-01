@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<a href="{{url_for('character_create')}}">Create a new Character</a>
+{% for character in characters %}
+    <li>{{character.name}}</li>
+{% endfor %}
+{% endblock %}
