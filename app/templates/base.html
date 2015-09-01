@@ -1,8 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    {% else %}
+    <title>{% block title %}Cyberpunk 2020{% endblock %}</title>
+    {% endif %}
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <style>
     	.container{
@@ -22,7 +27,7 @@
 	        {% if current_user.is_anonymous() %}
 	            <a href="{{url_for('signup')}}">Register</a> / <a href="{{url_for       ('login')}}">Log In</a>
 	        {% else %}
-	            Logged in as {{current_user.name}} <a href="{{url_for('users.logout')}}">Logout</a>
+	            Logged in as {{current_user.username}} <a href="{{url_for('logout')}}">Logout</a>
 	        {% endif %}
         </li>
         </ul>
