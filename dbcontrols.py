@@ -35,6 +35,11 @@ def table_options(connection):
         print 'character name index added'
     except RqlRuntimeError:
         print 'character name index already exists'
+    try:
+        r.table('characters').index_create('user').run(connection)
+        print 'character user index added'
+    except RqlRuntimeError:
+        print 'character user index already exists'
     
 
 def db_create(connection):

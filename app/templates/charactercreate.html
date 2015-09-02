@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{self.title()}}</h1>
+
+<form action="{{url_for('character_create')}}" role="form" method="POST">
+	{{form.hidden_tag()}}
+	<p>
+		<h4>Enter Character Name</h4>
+		{{form.name}}
+		<input type="submit" value="Create" class="btn btn-default btn-md">
+		{% for error in form.errors.label %}
+		<span style="color: red;">{{ error }}</span>
+		{% endfor %}
+	</p>
+</form>
+
+{% endblock %}
