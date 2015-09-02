@@ -40,6 +40,16 @@ def character_create():
         return redirect(url_for('character_index'))
     return render_template('charactercreate.html', form = form, title = 'Create New Character')
     
+
+@app.route('/characters/<char_id>', methods = ['GET'])
+@login_required
+def character_display(char_id):
+    character = r.table('characters').get(int(char_id)).run(g.rdb_conn)
+    if current_user.get_id() != character['user']:
+        abort(401)
+    return render_template('characterview.html', title = character['name'], character = character)
+
+    
 def autoinc_id(table):
      id_selection = table.get_field('id').run(g.rdb_conn)
      id_list = list(id_selection)
