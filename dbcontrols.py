@@ -1,15 +1,16 @@
 import rethinkdb as r
 from rethinkdb.errors import RqlRuntimeError
-from app.config import RDB_HOST, RDB_PORT, CP2020DB
+from config import RDB_HOST, RDB_PORT, CP2020_DB
 
 
 TABLE_NAMES = ['test', 'users', 'characters']
 
 # db setup; only run once
-def dbSetup():
+def db_setup():
     print 'Setting up database'
     connection = r.connect(host=RDB_HOST, port=RDB_PORT)
     db_create(connection)
+    connection.use(CP2020_DB)
     table_create(connection)
     table_options(connection)
     connection.close()
@@ -24,16 +25,21 @@ def table_create(connection):
             print 'Table ' + table + ' already exists'
             
 def table_options(connection):
-    r.table('users').index_create('username').run(connection)
-    print 'username index added'
-    r.table('characters').index_create('name').run(connection)
-    print 'character name index added'
+    try:
+        r.table('users').index_create('username').run(connection)
+        print 'username index added'
+    except RqlRuntimeError:
+        print 'username index already exists'
+    try:
+        r.table('characters').index_create('name').run(connection)
+        print 'character name index added'
+    except RqlRuntimeError:
+        print 'character name index already exists'
     
 
 def db_create(connection):
     try:
         r.db_create(CP2020_DB).run(connection)
-        connection.use(CP2020_DB)
         print 'Database created'
     except RqlRuntimeError:
         print 'Database already exists'
