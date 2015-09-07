@@ -37,7 +37,7 @@ def character_index():
 def character_create():
     form = CharacterForm()
     if form.validate_on_submit():
-        char_id = autoinc_id(r.table('characters'))
+        char_id = autoinc_id(r.table('characters'), g.rdb_conn)
         r.table('characters').insert({'id':char_id, 'name':form.name.data, 'user': current_user.get_id()}).run(g.rdb_conn)
         return redirect(url_for('character_index'))
     return render_template('characters/charactercreate.html', form = form, title = 'Create New Character')

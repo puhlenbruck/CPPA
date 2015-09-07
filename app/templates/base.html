@@ -35,7 +35,6 @@
 	            <a href="{{url_for('signup')}}">Register</a> / <a href="{{url_for       ('login')}}">Log In</a>
 	        {% else %}
 	            Logged in as {{current_user.username}} <a href="{{url_for('logout')}}">Logout</a>
-	            Authentication is {{current_user.is_authenticated()}}
 	            <li><a href="{{url_for('character_index')}}">Characters</a></li>
 	        {% endif %}
         </li>
