@@ -1,3 +1,4 @@
+from flask import g
 import rethinkdb as r
 from rethinkdb.errors import RqlRuntimeError
 from config import RDB_HOST, RDB_PORT, CP2020_DB
@@ -48,6 +49,13 @@ def db_create(connection):
         print 'Database created'
     except RqlRuntimeError:
         print 'Database already exists'
+        
+
+def autoinc_id(table):
+     id_selection = table.get_field('id').run(g.rdb_conn)
+     id_list = list(id_selection)
+     new_id = len(id_list)+1
+     return new_id
 
 
 # DANGEROUS

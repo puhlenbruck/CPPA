@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1>{{self.title()}}</h1>
+
+<form action="{{url_for('character_edit', char_id=character.id)}}" role="form" method="POST">
+	{{form.hidden_tag()}}
+	<p>{{form.name.label}}: {{form.name}}<br>
+		{{form.role.label}}: {{form.role}}<br>
+		{{form.intelligence.label}}: {{form.intelligence}}<br>
+		{{form.reflex.label}}: {{form.reflex}}<br>
+		{{form.tech.label}}: {{form.tech}}<br>
+		{{form.cool.label}}: {{form.cool}}<br>
+		{{form.attractivness.label}}: {{form.attractivness}}<br>
+		{{form.luck.label}}: {{form.luck}}<br>
+		{{form.movement_allowance.label}}: {{form.movement_allowance}}<br>
+		{{form.empathy.label}}: {{form.empathy}}<br>
+		<input type="submit" value="Save" class="btn btn-default btn-md">
+		{% for error in form.errors.label %}
+		<span style="color: red;">{{ error }}</span>
+		{% endfor %}
+	</p>
+</form>
+
+{% endblock %}
