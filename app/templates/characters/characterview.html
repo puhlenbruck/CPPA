@@ -6,7 +6,7 @@
     {{character.name}}<br>
     {{character.role}}<br>
     {% if character.attributes %}
-    {% for name,value in character.attributes.iteritems() %}
+    {% for name,value in character.attributes.items() %}
         {{name}}: {{value}}<br>
     {% endfor %}
     {% endif %}

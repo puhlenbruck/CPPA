@@ -1,10 +1,9 @@
 from flask import render_template, url_for, redirect, g, abort, flash, request, abort
 from flask.ext.login import login_required, current_user
 from app import app
-from forms import CharacterForm
+from .forms import CharacterForm
 from dbcontrols import autoinc_id
 import rethinkdb as r
-import json
 from config import RDB_HOST, RDB_PORT, CP2020_DB
 from wtforms.fields import TextField, IntegerField
 from wtforms.validators import Required

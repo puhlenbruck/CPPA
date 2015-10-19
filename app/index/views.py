@@ -1,6 +1,6 @@
 from flask import render_template, url_for, redirect, g, abort, Markup, Blueprint, flash, jsonify, request
 from app import app
-from forms import TaskForm
+from .forms import TaskForm
 import rethinkdb as r
 from config import RDB_HOST, RDB_PORT, CP2020_DB
 

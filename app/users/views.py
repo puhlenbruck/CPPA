@@ -3,7 +3,7 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from app import app
 import rethinkdb as r
 from config import RDB_HOST, RDB_PORT, CP2020_DB
-from forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm
 from app.auth import validate_credentials, create_password_hash
 from app.users.models import confirm_unique_username, create_new_user
 
@@ -28,7 +28,7 @@ def teardown_request(exception):
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if not current_user.is_anonymous():
+        if current_user.is_authenticated:
             logout_user()
         user = validate_credentials(form.username.data, form.password.data)
         if user is not None:
