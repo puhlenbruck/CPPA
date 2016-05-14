@@ -2,8 +2,9 @@ from flask import render_template, url_for, redirect, g, abort, flash, request, 
 from flask.ext.login import login_required, current_user
 from app import app
 from .forms import CharacterForm
-from dbcontrols import autoinc_id
 import rethinkdb as r
+import random
+import base64
 from config import RDB_HOST, RDB_PORT, CP2020_DB
 from wtforms.fields import TextField, IntegerField
 from wtforms.validators import Required
@@ -23,29 +24,39 @@ def teardown_request(exception):
         g.rdb_conn.close()
     except AttributeError:
         pass
-        
+
 @app.route('/characters/', methods = ['GET'])
 @login_required
 def character_index():
     user_id = current_user.get_id()
-    chars = r.table('characters').get_all(user_id, index = 'user').run(g.rdb_conn)
-    return render_template('characters/characterindex.html', characters = chars)
-    
+    db_chars = r.table('characters').get_all(user_id, index = 'user').run(g.rdb_conn)
+    web_chars = []
+    for c in db_chars:
+        c['id'] = int_to_b64_string(c.get('id'))
+        web_chars.append(c)
+    return render_template('characters/characterindex.html', characters = web_chars)
+
 @app.route('/characters/new', methods = ['GET', 'POST'])
 @login_required
 def character_create():
     form = CharacterForm()
     if form.validate_on_submit():
-        char_id = autoinc_id(r.table('characters'), g.rdb_conn)
+        char_id = rand_id()
         r.table('characters').insert({'id':char_id, 'name':form.name.data, 'user': current_user.get_id()}).run(g.rdb_conn)
         return redirect(url_for('character_index'))
     return render_template('characters/charactercreate.html', form = form, title = 'Create New Character')
-    
+
+def rand_id():
+    while True:
+        id = random.getrandbits(24)
+        if r.table('characters').get(id).run(g.rdb_conn) is None:
+            return id;
+
 
 @app.route('/characters/<char_id>', methods = ['GET'])
 @login_required
 def character_display(char_id):
-    character = r.table('characters').get(int(char_id)).run(g.rdb_conn)
+    character = r.table('characters').get(b64_str_to_int(char_id)).run(g.rdb_conn)
     if current_user.get_id() != character['user']:
         abort(401)
     return render_template('characters/characterview.html', title = character['name'], character = character)
@@ -53,7 +64,7 @@ def character_display(char_id):
 @app.route('/characters/<char_id>/edit', methods = ['GET','POST'])
 @login_required
 def character_edit(char_id):
-    character = r.table('characters').get(int(char_id)).run(g.rdb_conn)
+    character = r.table('characters').get(b64_str_to_int(char_id)).run(g.rdb_conn)
     if current_user.get_id() != character['user']:
         abort(401)
     form = CharacterForm()
@@ -64,7 +75,7 @@ def character_edit(char_id):
                 char_attributes[key] = 0
         r.table('characters').get(int(character['id'])).update({'name':form.name.data, 'role':form.role.data.lower(), 'attributes':char_attributes}).run(g.rdb_conn)
         return redirect(url_for('character_display', char_id=character['id']))
-   
+
     form.name.data = character.get('name')
     form.role.data = character.get('role')
     char_attributes = character.get('attributes')
@@ -77,5 +88,11 @@ def character_edit(char_id):
         form.luck.data = char_attributes.get('LUCK')
         form.movement_allowance.data = char_attributes.get('MA')
         form.empathy.data = char_attributes.get('EMP')
-    
+
     return render_template('characters/characteredit.html', form = form, title = 'edit: ' + character['name'], character = character)
+
+def int_to_b64_string(int_val):
+    return base64.urlsafe_b64encode(int_val.to_bytes(3,'big')).decode('utf-8')
+
+def b64_str_to_int(string):
+    return int.from_bytes(base64.urlsafe_b64decode(string.encode('utf-8')),'big')
