@@ -59,6 +59,7 @@ def character_display(char_id):
     character = r.table('characters').get(b64_str_to_int(char_id)).run(g.rdb_conn)
     if current_user.get_id() != character['user']:
         abort(401)
+    character['id'] = int_to_b64_string(character['id'])
     return render_template('characters/characterview.html', title = character['name'], character = character)
 
 @app.route('/characters/<char_id>/edit', methods = ['GET','POST'])
@@ -74,7 +75,7 @@ def character_edit(char_id):
             if char_attributes[key] is None:
                 char_attributes[key] = 0
         r.table('characters').get(int(character['id'])).update({'name':form.name.data, 'role':form.role.data.lower(), 'attributes':char_attributes}).run(g.rdb_conn)
-        return redirect(url_for('character_display', char_id=character['id']))
+        return redirect(url_for('character_display', char_id=int_to_b64_string(character['id'])))
 
     form.name.data = character.get('name')
     form.role.data = character.get('role')
@@ -88,11 +89,11 @@ def character_edit(char_id):
         form.luck.data = char_attributes.get('LUCK')
         form.movement_allowance.data = char_attributes.get('MA')
         form.empathy.data = char_attributes.get('EMP')
-
+    character['id'] = int_to_b64_string(character.get('id'))
     return render_template('characters/characteredit.html', form = form, title = 'edit: ' + character['name'], character = character)
 
 def int_to_b64_string(int_val):
     return base64.urlsafe_b64encode(int_val.to_bytes(3,'big')).decode('utf-8')
 
-def b64_str_to_int(string):
-    return int.from_bytes(base64.urlsafe_b64decode(string.encode('utf-8')),'big')
+def b64_str_to_int(b64str):
+    return int.from_bytes(base64.urlsafe_b64decode(b64str.encode('utf-8')),'big')
