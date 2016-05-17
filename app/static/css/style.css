@@ -1,0 +1,17 @@
+body{
+  background: black;
+}
+
+.navbar{
+  border-top: solid thin #aaaaaa;
+  border-bottom: solid thin #aaaaaa;
+}
+
+.container{
+  padding-top: 50px;
+}
+
+#title{
+  color: #cccccc;
+  font-family: Anton
+}

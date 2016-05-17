@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>
         {% block title %}
             {% if title %}
@@ -13,47 +12,59 @@
             {% endif %}
         {% endblock %}
     </title>
-    
-    
+    <link href='https://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <style>
-    	.container{
-    		padding-top: 50px;
-    		max-width: 500px;
-    	}
-    </style>
+    <link href="static/css/style.css" rel="stylesheet" media="screen">
   </head>
   <body>
     <header>
-        <h1>{{ self.title() }}</h1>
-        <h2 style="color:red"><strong>WARNING: </strong><i>This site is still under development. Our database can and will be reset without notice, erasing all data, including user accounts. Feel free to poke around and have fun, but be aware that things could be drastically different the next time you are here,and there are no guarantees things will be saved.</i></h2>
-        <nav>
-        <ul>
-        <li><a href="/">Home</a></li>
-        <li>
-	        {% if current_user.is_authenticated %}
-                    Logged in as {{current_user.username}} <a href="{{url_for('logout')}}">Logout</a>
-	            <li><a href="{{url_for('character_index')}}">Characters</a></li>
-	        {% else %}
-	            <a href="{{url_for('signup')}}">Register</a> / <a href="{{url_for('login')}}">Log In</a>
-	        {% endif %}
-        </li>
-        </ul>
-        </nav>
-     </header>
+        <h1 id="title">{{ self.title() }}</h1>
+        <div class="alert alert-danger">
+          <strong>WARNING: </strong><em>This site is still under development.
+          Our database can and will be reset without notice, erasing all data, including user accounts.
+          Feel free to poke around and have fun, but be aware that things could be drastically different the
+          next time you are here,and there are no guarantees things will be saved.</em>
+        </div>
+        <div class="row">
+          <div class="col-md-12"><span id="login-text" class="pull-right">
+          {% if current_user.is_authenticated %}
+            Logged in as {{current_user.username}}
+          {% else %}
+            You are not logged in
+          {% endif %}
+        </span></div>
+      </div>
+        <nav class="navbar">
+          <div class="container-fluid">
+            <ul class="nav navbar-nav">
+              <li><a href="/">Home</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+  	        {% if current_user.is_authenticated %}
+                <li><a href="{{url_for('logout')}}">Logout</a></li>
+  	            <li><a href="{{url_for('character_index')}}">Characters</a></li>
+  	        {% else %}
+  	            <li><a href="{{url_for('signup')}}">Register</a></li>
+                <li><a href="{{url_for('login')}}">Log In</a></li>
+  	        {% endif %}
+            </ul>
+          </div>
+      </nav>
+   </header>
     {% set messages = get_flashed_messages() %}
     {% if messages %}
-        <section>
-	        {% for message in messages %}
-	            <p>{{ message }}</p>
-	        {% endfor %}
-        </section>
+      <section>
+	       {% for message in messages %}
+	        <p>{{ message }}</p>
+	      {% endfor %}
+      </section>
     {% endif %}
     <section>
   	    <div class="container">
        	  {% block content %}{% endblock %}
         </div>
-        <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    </section>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.3/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
     </body>
 </html>
