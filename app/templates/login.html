@@ -3,14 +3,10 @@
   <h2>Login</h2>
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <form action="{{ url_for('login') }}" method=post>
-  {{form.hidden_tag()}}
-    <p>
-        <h4>{{form.username.label}}</h4>
-        {{form.username}}
-        <h4>{{form.password.label}}</h4>
-        {{form.password}}
-        </br>
-        <input type=submit value=Login>
-    </p>
+    {% import 'forms.html' as forms %}
+    {% for field in form %}
+      {{ forms.render_field(field) }}
+    {% endfor %}
+    <input type=submit value=Login>
   </form>
 {% endblock %}

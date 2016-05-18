@@ -19,3 +19,7 @@ body{
 #login-text{
   padding-left: 8px;
 }
+
+.error{
+  color: red;
+}
