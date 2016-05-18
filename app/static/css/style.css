@@ -15,3 +15,7 @@ body{
   color: #cccccc;
   font-family: Anton
 }
+
+#login-text{
+  padding-left: 8px;
+}
