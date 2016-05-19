@@ -1,18 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2>Register</h2>
-  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
-  <form action="{{ url_for('signup') }}" method=post>
-  {{form.hidden_tag()}}
-    <p>
-        <h4>Username</h4>
-        {{form.username}}
-        <h4>Password</h4>
-        {{form.password}}
-        <h4>Confirm Password</h4>
-        {{form.password_confirm}}
-        </br>
-        <input type=submit value=Register>
-    </p>
-  </form>
+<div class="container">
+  <div class="row center-block">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="row">
+        <h2>Register</h2>
+      </div>
+      <div class="row">
+        {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+      </div>
+      <div class="row">
+        <form action="{{ url_for('signup') }}" method=post>
+          {% import 'forms.html' as forms %}
+          {% for field in form %}
+            {{ forms.render_field(field) }}
+          {% endfor %}
+          <input class="btn" type=submit value=Register>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
