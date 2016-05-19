@@ -1,8 +1,10 @@
 body{
   background: black;
+  width: 100%;
 }
 
 .navbar{
+  border-radius: 0;
   border-top: solid thin #aaaaaa;
   border-bottom: solid thin #aaaaaa;
 }
@@ -17,7 +19,8 @@ body{
 }
 
 #login-text{
-  padding-left: 8px;
+  margin-right: 2%;
+  margin-bottom: 1px;
 }
 
 .error{
