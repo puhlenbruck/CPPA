@@ -2,7 +2,7 @@
 {% block content %}
 <h2>{{title}}</h2><br>
 <a href="{{url_for('character_index')}}">Back to List</a><br>
-<a href="{{url_for('character_edit', char_id=character.id)}}">edit</a><br>
+<a href="{{url_for('character_display',edit=true, char=character.id)}}">edit</a><br>
     {{character.name}}<br>
     {{character.role}}<br>
     {% if character.attributes %}
@@ -10,5 +10,5 @@
         {{name}}: {{value}}<br>
     {% endfor %}
     {% endif %}
-    
+
 {% endblock %}
