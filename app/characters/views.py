@@ -24,7 +24,7 @@ def teardown_request(exception):
         g.rdb_conn.close()
     except AttributeError:
         pass
-        
+
 @app.route('/characters', methods = ['GET'])
 @login_required
 def character_index():
@@ -53,34 +53,29 @@ def rand_id():
             return id;
 
 
-@app.route('/character', methods = ['GET'])
+@app.route('/characters/<char_id>', methods = ['GET'])
 @login_required
-def character_display():
-    char_id = request.args.get('char','AAAA')
+def character_display(char_id):
     character = r.table('characters').get(b64_str_to_int(char_id)).run(g.rdb_conn)
     if character is None or current_user.get_id() != character['user']:
         abort(404)
-    character['id'] = int_to_b64_string(character['id'])
-    if request.args.get('edit',False):
-        return render_template('characters/characteredit.html', form = CharacterForm(id=character.get('id')), title = 'edit: ' + character['name'], character = character)
+    character['id'] = char_id
     return render_template('characters/characterview.html', title = character['name'], character = character)
 
-@app.route('/character/edit', methods = ['POST'])
+@app.route('/characters/<char_id>/edit', methods = ['GET','POST'])
 @login_required
-def character_edit():
+def character_edit(char_id):
     form = CharacterForm()
-    if not form.validate_on_submit():
-        abort(400)
-    char_id = form.id.data
     character = r.table('characters').get(b64_str_to_int(char_id)).run(g.rdb_conn)
     if current_user.get_id() != character['user']:
-        abort(401)
+        abort(404)
+    if form.validate_on_submit():
         char_attributes = {'INT':form.intelligence.data, 'REF':form.reflex.data, 'TECH':form.tech.data, 'COOL':form.cool.data, 'ATTR':form.attractivness.data, 'LUCK':form.luck.data, 'MA':form.movement_allowance.data, 'EMP':form.empathy.data}
         for key in char_attributes:
-            if char_attributes[key] is None:
+            if char_attributes.get(key,None) is None:
                 char_attributes[key] = 0
         r.table('characters').get(int(character['id'])).update({'name':form.name.data, 'role':form.role.data.lower(), 'attributes':char_attributes}).run(g.rdb_conn)
-        return redirect(url_for('character_display', char=char_id))
+        return redirect(url_for('character_display', char_id=char_id))
 
     form.name.data = character.get('name')
     form.role.data = character.get('role')
@@ -94,8 +89,8 @@ def character_edit():
         form.luck.data = char_attributes.get('LUCK')
         form.movement_allowance.data = char_attributes.get('MA')
         form.empathy.data = char_attributes.get('EMP')
-    character['id'] = int_to_b64_string(character.get('id'))
-    return redirect(url_for('character_display', char=char_id))
+    character['id'] = char_id
+    return render_template('characters/characteredit.html', title = 'Edit: ' + character['name'], character = character, form=form)
 
 def int_to_b64_string(int_val):
     return base64.urlsafe_b64encode(int_val.to_bytes(3,'big')).decode('utf-8')
