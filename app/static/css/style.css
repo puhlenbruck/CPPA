@@ -16,7 +16,7 @@ body{
 }
 #login-text{
   margin-right: 2%;
-  margin-bottom: 1px;
+  margin-bottom: .2em;
 }
 .error{
   color: red;
@@ -29,4 +29,8 @@ body{
   color: #000;
   background-color: #ec3333;
   text-align:left;
+}
+
+#new-char{
+  color: #000;
 }
