@@ -6,7 +6,7 @@
   </div>
   {% for character in characters %}
     <div class="row">
-      <div class="col-md-3"></div><div class="col-md-4"><a href="{{url_for('character_display', char=character.id)}}">{{character.name}}</a></div><div class="col-md-2"><a href="{{url_for('character_display',edit=true, char=character.id)}}">edit</a></div>
+      <div class="col-md-3"></div><div class="col-md-4"><a href="{{url_for('character_display', char=character.id)}}">{{character.name}}</a></div>
     </div>
   {% endfor %}
 </div>
