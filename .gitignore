@@ -41,3 +41,5 @@ var/
 pip-log.txt
 pip-delete-this-directory.txt
 
+#image files
+app/static/img/
