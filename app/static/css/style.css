@@ -24,3 +24,9 @@ body{
 #new-char{
   background-color: #00ff00;
 }
+#error{
+  display: none;
+  color: #000;
+  background-color: #ec3333;
+  text-align:left;
+}

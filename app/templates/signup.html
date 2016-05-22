@@ -9,17 +9,21 @@
       </div>
       <div class="row">
         {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+          <div id="error" class="alert alert-danger"></div>
       </div>
       <div class="row">
-        <form action="{{ url_for('signup') }}" method=post>
+        <form id="signup-form" method="post" action="/signup/">
           {% import 'forms.html' as forms %}
           {% for field in form %}
             {{ forms.render_field(field) }}
           {% endfor %}
-          <input class="btn" type=submit value=Register>
+          <button class="btn" onclick="register(); return false">Register</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script src="{{url_for('static',filename='js/register.js')}}"></script>
 {% endblock %}

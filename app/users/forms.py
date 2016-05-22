@@ -8,6 +8,6 @@ class LoginForm(Form):
 
 
 class RegisterForm(Form):
-    username = TextField('username', validators = [Required()], description='username')
-    password = PasswordField('password', validators = [Required()], description='password')
-    password_confirm = PasswordField('password', validators = [Required()], description='repeat password')
+    username = TextField('username',  id='un',validators = [Required()], description='username')
+    password = PasswordField('password', id='pw', validators = [Required()], description='password')
+    password_confirm = PasswordField('password', id='pwc', validators = [Required()], description='repeat password')
