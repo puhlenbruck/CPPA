@@ -2,27 +2,25 @@ body{
   background: black;
   width: 100%;
 }
-
 .navbar{
   border-radius: 0;
   border-top: solid thin #aaaaaa;
   border-bottom: solid thin #aaaaaa;
 }
-
 .container{
   padding-top: 50px;
 }
-
 #title{
   color: #cccccc;
   font-family: Anton
 }
-
 #login-text{
   margin-right: 2%;
   margin-bottom: 1px;
 }
-
 .error{
   color: red;
+}
+#new-char{
+  background-color: #00ff00;
 }

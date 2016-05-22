@@ -24,7 +24,7 @@ def teardown_request(exception):
         g.rdb_conn.close()
     except AttributeError:
         pass
-
+        
 @app.route('/characters', methods = ['GET'])
 @login_required
 def character_index():
