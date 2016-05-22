@@ -5,10 +5,8 @@ import rethinkdb as r
 class User(object):
     data = []
 
-
     def __init__(self, db_data):
         self.data = db_data
-
 
     def __getitem__(self, key):
             return self.data[key]

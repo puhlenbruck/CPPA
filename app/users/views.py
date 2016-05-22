@@ -22,8 +22,8 @@ def teardown_request(exception):
         g.rdb_conn.close()
     except AttributeError:
         pass
-        
-        
+
+
 @app.route('/login/', methods = ['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -32,13 +32,13 @@ def login():
             logout_user()
         user = validate_credentials(form.username.data, form.password.data)
         if user is not None:
-            
+
             login_user(user)
             flash('You were logged in')
             next = request.args.get('next')
             if not next_is_valid(next):
                 return abort(400)
-            return redirect(next or url_for('index'))
+            return redirect(next or url_for('character_index'))
         else:
             return render_template('login.html', title = 'Cyberpunk2020', form = form, error='invalid username or password')
     return render_template('login.html', title = 'Cyberpunk2020', form = form)
@@ -46,7 +46,7 @@ def login():
 
 def next_is_valid(next):
     return True
-    
+
 
 @app.route('/logout/', methods = ['GET'])
 @login_required
@@ -55,7 +55,7 @@ def logout():
     flash('You were logged out')
     return redirect(url_for('index'))
 
-  
+
 @app.route('/signup/', methods = ['GET', 'POST'])
 def signup():
     form = RegisterForm()
@@ -67,11 +67,9 @@ def signup():
             error = 'passwords do not match'
             return render_template('signup.html', title = 'Cyberpunk2020', form = form, error = error)
         pwdhash = create_password_hash(form.password.data)
-        create_new_user(form.username.data, pwdhash['password'], pwdhash['salt'])
-        flash('user ' + form.username.data + ' created')
-        return redirect(url_for('index'))
+        user = create_new_user(form.username.data, pwdhash['password'], pwdhash['salt'])
+        if user is not None:
+            flash('user ' + form.username.data + ' created')
+            login_user(user)
+            return redirect(url_for('index'))
     return render_template('signup.html', title = 'Cyberpunk2020', form = form)
-    
-
-
-    
