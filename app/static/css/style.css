@@ -1,5 +1,5 @@
 body{
-  background: black;
+  background: #000;
   width: 100%;
 }
 .navbar{
@@ -7,11 +7,8 @@ body{
   border-top: solid thin #aaaaaa;
   border-bottom: solid thin #aaaaaa;
 }
-.container{
-  padding-top: 50px;
-}
 #title{
-  color: #cccccc;
+  color: #ccc;
   font-family: Anton
 }
 #login-text{
@@ -22,9 +19,14 @@ body{
   color: red;
 }
 
+.content{
+  color: green;
+}
+
 #new-char{
   background-color: #00ff00;
 }
+
 #error{
   display: none;
   color: #000;
@@ -34,4 +36,10 @@ body{
 
 #new-char{
   color: #000;
+}
+
+#char-edit input{
+  border: 0;
+  background: 0;
+  color: #fff
 }
