@@ -1,6 +1,5 @@
-from flask import render_template, url_for, redirect, g, abort, Markup, Blueprint, flash, jsonify, request
+from flask import render_template, g, abort
 from app import app
-from .forms import TaskForm
 import rethinkdb as r
 from config import RDB_HOST, RDB_PORT, CP2020_DB
 
@@ -25,12 +24,4 @@ def teardown_request(exception):
 
 @app.route('/', methods = ['GET', 'POST'])
 def index():
-	form = TaskForm()
-	if form.validate_on_submit():
-		r.table('test').insert({"name":form.label.data}).run(g.rdb_conn)
-		return redirect(url_for('index'))
-	selection = list(r.table('test').run(g.rdb_conn))
-	return render_template('index.html', form = form, tasks = selection)
-
-
-_LINK = Markup('<a href="{url}">{name}</a>')
+	return render_template('index.html')

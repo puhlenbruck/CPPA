@@ -43,3 +43,7 @@ body{
   background: 0;
   color: #fff
 }
+
+#skill-box{
+  border: solid #fff;
+}
