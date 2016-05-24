@@ -9,6 +9,7 @@ from config import RDB_HOST, RDB_PORT, CP2020_DB
 from wtforms.fields import TextField, IntegerField
 from wtforms.validators import Required
 from .character.attributes import ATTRIBUTES
+from .models import load_character
 
 # open connection before each request
 @app.before_request
@@ -57,11 +58,11 @@ def rand_id():
 @app.route('/characters/<char_id>', methods = ['GET'])
 @login_required
 def character_display(char_id):
-    character = r.table('characters').get(b64_str_to_int(char_id)).run(g.rdb_conn)
-    if character is None or current_user.get_id() != character['user']:
+    character = load_character(b64_str_to_int(char_id))
+    if character is None or current_user.get_id() != character.user:
         abort(404)
-    character['id'] = char_id
-    return render_template('characters/characterview.html', title = character['name'], character = character, attributes=ATTRIBUTES)
+    character.id = char_id
+    return render_template('characters/characterview.html', title = character.name, character = character, attributes=ATTRIBUTES)
 
 @app.route('/characters/<char_id>/edit', methods = ['GET','POST'])
 @login_required

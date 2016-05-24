@@ -9,3 +9,9 @@ ATTRIBUTES=[
     {'name':'Reflex','abbr':'REF', 'skills':['Archery','Athletics','Brawling','Dance','Dodge & Escape','Driving','Fencing','Handgun','Heavy Weapons','Martial Art','Melee','Motorcycle','Operate Heavy Machinery','Pilot (Gyro)','Pilot (Fixed Wing)','Pilot (Dirigible)','Pilot (Vector Thrust Vehicle)','Rifle','Stealth','Submachinegun']},
     {'name':'Tech','abbr':'TECH', 'skills':['Aero Tech','AV Tech','Basic Tech','Cryotank Operation','Cyberdeck Design','Cyber Tech','Demolitions','Disguise','Electronics','Electronic Security','First Aid','Forgery','Gyro Tech','Paint/Draw','Photo & Film','Pharmacuticals','Pick Lock','Pick Pocket','Play Instrument','Weaponsmith']}
 ]
+
+def default_attributes():
+    default_attributes = {}
+    for attr in ATTRIBUTES:
+        default_attributes[attr['abbr']] = 0;
+    return default_attributes

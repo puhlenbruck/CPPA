@@ -30,7 +30,9 @@
               <h5>{{attr.name}}</h5>
               <ul>
               {% for skill in attr.skills %}
-                <li>{{skill}}</li>
+                <li>{{skill}}:
+                  {{character.skills.get(skill,0)}}
+                </li>
               {% endfor %}
             </ul>
             {% endfor %}
