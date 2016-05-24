@@ -13,5 +13,5 @@ ATTRIBUTES=[
 def default_attributes():
     default_attributes = {}
     for attr in ATTRIBUTES:
-        default_attributes[attr['abbr']] = 0;
+        default_attributes[attr['abbr']] = {'value':0, 'skills':[]};
     return default_attributes

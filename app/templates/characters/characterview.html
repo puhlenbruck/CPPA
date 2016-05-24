@@ -14,28 +14,38 @@
     <div class="col-md-2">
       <span>Role: <strong>{{character.role}}</strong>
     </div>
-      {% if character.attributes %}
-        {% for name,value in character.attributes.items() %}
+        {% for attr in character.attributes %}
           <div class="col-md-1">
-            {{name}}: {{value}}
+            {{attr[0]}}: {{attr[1].value}}
           </div>
         {% endfor %}
-      {% endif %}
   </div>
   <div class="row">
     <div id="skill-box">
       <div class="row">
+        {% set skill_items = character.skills + character.attributes|length %}
+        {% set skill_items = skill_items + skill_items%3 %}
+        {% set column_size = skill_items/3 %}
+        {% set current_row = [0] %}
+        {% set new_column %}
+        </div>
         <div class="col-md-4">
-            {% for attr in attributes %}
-              <h5>{{attr.name}}</h5>
+        {% endset%}
+        <div class="col-md-4">
+            {% for attr in character.attributes %}
+              <h5>{{attr[0]}}</h5>
+              {# need a counter that gets into scope #}
+              {% if current_row.append(current_row.pop() + 1) %}{% endif %}
+              {% if current_row[0] is divisibleby column_size%}{{new_column|safe}}{% endif %}
               <ul>
-              {% for skill in attr.skills %}
-                <li>{{skill}}:
-                  {{character.skills.get(skill,0)}}
-                </li>
+              {% for skill in attr[1].skills %}
+                <li>{{skill.name}}: {{skill.value}}</li>
+                {% if current_row.append(current_row.pop() + 1) %}{% endif %}
+                {% if current_row[0] is divisibleby(column_size) and current_row[0] is not equalto(skill_items) %}</ul>{{new_column|safe}}<ul>{% endif %}
               {% endfor %}
             </ul>
             {% endfor %}
+            {{current_row[0]}}
       </div>
     </div>
   </div>
