@@ -26,32 +26,14 @@
     <div id="skill-box">
       <div class="row">
         <div class="col-md-4">
-          <ul>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-          </ul>
-        </div>
-        <div class="col-md-4">
-          <ul>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-          </ul>
-        </div>
-        <div class="col-md-4">
-          <ul>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-            <li>Skills</li>
-          </ul>
-        </div>
+            {% for attr in attributes %}
+              <h5>{{attr.name}}</h5>
+              <ul>
+              {% for skill in attr.skills %}
+                <li>{{skill}}</li>
+              {% endfor %}
+            </ul>
+            {% endfor %}
       </div>
     </div>
   </div>

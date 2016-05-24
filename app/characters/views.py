@@ -8,6 +8,7 @@ import base64
 from config import RDB_HOST, RDB_PORT, CP2020_DB
 from wtforms.fields import TextField, IntegerField
 from wtforms.validators import Required
+from .character.attributes import ATTRIBUTES
 
 # open connection before each request
 @app.before_request
@@ -60,7 +61,7 @@ def character_display(char_id):
     if character is None or current_user.get_id() != character['user']:
         abort(404)
     character['id'] = char_id
-    return render_template('characters/characterview.html', title = character['name'], character = character)
+    return render_template('characters/characterview.html', title = character['name'], character = character, attributes=ATTRIBUTES)
 
 @app.route('/characters/<char_id>/edit', methods = ['GET','POST'])
 @login_required
