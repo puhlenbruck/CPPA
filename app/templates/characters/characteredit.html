@@ -7,7 +7,7 @@
 	{{form.hidden_tag()}}
 	<p>{{form.name.label}}: {{form.name}}<br>
 		{{form.role.label}}: {{form.role}}<br>
-		{{form.intelligence.label}}: {{form.intelligence}}<br>
+		{{form.intelligence.label}}: {{form.intelligence}} | {{form.intelligence.errors}}<br>
 		{{form.reflex.label}}: {{form.reflex}}<br>
 		{{form.tech.label}}: {{form.tech}}<br>
 		{{form.cool.label}}: {{form.cool}}<br>
@@ -17,7 +17,7 @@
 		{{form.empathy.label}}: {{form.empathy}}<br>
 		<input type="submit" value="Save" class="btn btn-default btn-md">
 		{% for error in form.errors.label %}
-		<span style="color: red;">{{ error }}</span>
+		<span style="color: red;">{{ error }} </span>
 		{% endfor %}
 	</p>
 </form>

@@ -14,7 +14,7 @@
     <div class="col-md-2">
       <span>Role: <strong>{{character.role}}</strong>
     </div>
-        {% for attr in character.attributes %}
+        {% for attr in character.attributes.items() %}
           <div class="col-md-1">
             {{attr[0]}}: {{attr[1].value}}
           </div>
@@ -32,20 +32,19 @@
         <div class="col-md-4">
         {% endset%}
         <div class="col-md-4">
-            {% for attr in character.attributes %}
+            {% for attr in character.attributes.items() if attr[1].skills|length > 0 %}
               <h5>{{attr[0]}}</h5>
               {# need a counter that gets into scope #}
               {% if current_row.append(current_row.pop() + 1) %}{% endif %}
               {% if current_row[0] is divisibleby column_size%}{{new_column|safe}}{% endif %}
               <ul>
               {% for skill in attr[1].skills %}
-                <li>{{skill.name}}: {{skill.value}}</li>
+                <li>{{skill.name|e}}: {{skill.value|safe}}</li>
                 {% if current_row.append(current_row.pop() + 1) %}{% endif %}
                 {% if current_row[0] is divisibleby(column_size) and current_row[0] is not equalto(skill_items) %}</ul>{{new_column|safe}}<ul>{% endif %}
               {% endfor %}
             </ul>
             {% endfor %}
-            {{current_row[0]}}
       </div>
     </div>
   </div>

@@ -1,6 +1,7 @@
 from flask import g
 import rethinkdb as r
 import random
+from collections import OrderedDict
 from .character.attributes import default_attributes, ATTRIBUTES
 
 class Character(object):
@@ -23,8 +24,7 @@ class Character(object):
                         self.attributes[key]['skills'].append({'name':skill,'value':0})
                 self.attributes[key]['skills'].sort(key=lambda s: s.get('name'))
                 self.skills += len(self.attributes[key]['skills'])
-            self.attributes = list(self.attributes.items())
-            self.attributes.sort(key=lambda a: a[0])
+            self.attributes = OrderedDict(sorted(self.attributes.items(), key=lambda a: a[0]))
 
 def load_character(id):
     character=Character(r.table('characters').get(id).run(g.rdb_conn))
