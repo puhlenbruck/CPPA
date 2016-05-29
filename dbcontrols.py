@@ -14,7 +14,7 @@ def db_setup():
     connection.use(CP2020_DB)
     table_create(connection)
     table_options(connection)
-    poulate_default_skills(connection)
+    populate_default_skills(connection)
     connection.close()
     print ('Database setup completed')
 
@@ -70,7 +70,7 @@ def autoinc_id(table, connection):
 
 def populate_default_skills(connection):
     for attr in ATTRIBUTES:
-        for skill in attr['skill']:
+        for skill in attr['skills']:
             skill_mapping={'name':skill,'attribute':attr['name']}
             r.table('default_skills').insert(skill_mapping)
 
@@ -86,7 +86,7 @@ def db_reset():
             print ('Database could not be deleted')
         finally:
             connection.close()
-        dbSetup()
+        db_setup()
 
 def yn_choice(message, default='n'):
     choices = 'Y/n' if default.lower() in ('y', 'yes') else 'y/N'
