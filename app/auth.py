@@ -1,5 +1,5 @@
-from flask.ext.login import LoginManager
-from flask.ext.scrypt import generate_random_salt, generate_password_hash, check_password_hash
+from flask_login import LoginManager
+from flask_scrypt import generate_random_salt, generate_password_hash, check_password_hash
 from config import RDB_HOST, RDB_PORT, CP2020_DB
 from app.users.models import load_username, User
 import rethinkdb as r

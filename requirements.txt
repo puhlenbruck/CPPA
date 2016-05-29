@@ -1,4 +1,4 @@
-Flask==0.10.1
+Flask==0.11
 Flask-Login==0.3.2
 Flask-Scrypt==0.1.3.6
 Flask-WTF==0.12

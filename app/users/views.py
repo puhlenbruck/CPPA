@@ -1,5 +1,5 @@
 from flask import render_template, url_for, redirect, g, abort, flash, request, abort
-from flask.ext.login import login_user, logout_user, current_user, login_required
+from flask_login import login_user, logout_user, current_user, login_required
 from app import app
 import rethinkdb as r
 from config import RDB_HOST, RDB_PORT, CP2020_DB

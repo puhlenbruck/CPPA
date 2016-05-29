@@ -1,5 +1,5 @@
 from flask import render_template, url_for, redirect, g, abort, flash, request, abort
-from flask.ext.login import login_required, current_user
+from flask_login import login_required, current_user
 from app import app
 from .forms import CharacterForm
 import rethinkdb as r
@@ -64,11 +64,12 @@ def character_edit(char_id):
     if current_user.get_id() != character.user:
         abort(404)
     if form.validate_on_submit():
-        char_attributes = {'INT':form.intelligence.data, 'REF':form.reflex.data, 'TECH':form.tech.data, 'COOL':form.cool.data, 'ATTR':form.attractivness.data, 'LUCK':form.luck.data, 'MA':form.movement_allowance.data, 'EMP':form.empathy.data}
-        for key in char_attributes:
-            if char_attributes.get(key,None) is None:
-                char_attributes[key] = 0
-        r.table('characters').get(int(character['id'])).update({'name':form.name.data, 'role':form.role.data.lower(), 'attributes':char_attributes}).run(g.rdb_conn)
+        char_attributes = {'INT':{'value':form.intelligence.data}, 'REF':{'value':form.reflex.data}, 'TECH':{'value':form.tech.data},
+         'COOL':{'value':form.cool.data}, 'ATTR':{'value':form.attractivness.data}, 'LUCK':{'value':form.luck.data}, 'MA':{'value':form.movement_allowance.data}, 'EMP':{'value':form.empathy.data}}
+        for key in list(char_attributes.keys()):
+            if char_attributes[key].get('value') == 0:
+                char_attributes.pop(key,None)
+        r.table('characters').get(int(character.id)).update({'name':form.name.data, 'role':form.role.data.lower(), 'attributes':char_attributes}).run(g.rdb_conn)
         return redirect(url_for('character_display', char_id=char_id))
 
     form.name.data = character.name
