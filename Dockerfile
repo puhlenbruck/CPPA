@@ -1,10 +1,7 @@
-FROM ubuntu:xenial
+FROM python:3.5.1
 MAINTAINER Peter Uhlenbruck
 ADD . /app
 WORKDIR /app
-RUN apt-get update && apt-get -y upgrade && apt-get install -y python3.5-minimal python3-pip libssl-dev \
-&& pip3 install -r requirements.txt \
-&& apt-get purge -y python3-pip libssl-dev && apt-get autoremove -y --purge && apt-get clean \
-&& rm -rf /var/lib/apt/*
+RUN pip3 install -r requirements.txt
 EXPOSE 5000
-CMD ["python3.5", "/app/run.py"]
+CMD ["python3.5", "run.py"]
