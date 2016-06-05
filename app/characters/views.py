@@ -50,11 +50,12 @@ def character_create():
 @app.route('/characters/<char_id>', methods = ['GET'])
 @login_required
 def character_display(char_id):
-    character = load_character(b64_str_to_int(char_id))
+    show_all_skills = True if request.args.get('showAll','False').casefold() == 'True'.casefold() else False
+    character = load_character(b64_str_to_int(char_id), show_all_skills)
     if character is None or current_user.get_id() != character.user:
         abort(404)
     character.id = char_id
-    return render_template('characters/characterview.html', title = character.name, character = character, attributes=ATTRIBUTES)
+    return render_template('characters/characterview.html', title = character.name, character = character, attributes=ATTRIBUTES, show_all_skills=show_all_skills)
 
 @app.route('/characters/<char_id>/edit', methods = ['GET','POST'])
 @login_required

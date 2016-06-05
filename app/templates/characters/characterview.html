@@ -8,6 +8,13 @@
     <a class="btn-primary" href="{{url_for('character_edit', char_id=character.id)}}">edit</a>
   </div>
   <div class="row">
+    {% if show_all_skills %}
+      <a href="{{url_for('character_display', char_id=character.id)}}">Show only non-zero skills</a>
+    {% else %}
+      <a href="{{url_for('character_display', char_id=character.id, showAll=True)}}">Show all Skills</a>
+    {% endif %}
+  </div>
+  <div class="row">
     <h2>{{character.name}}</h2>
   </div>
   <div class="row">
@@ -39,7 +46,7 @@
               {% if current_row[0] is divisibleby column_size%}{{new_column|safe}}{% endif %}
               <ul>
               {% for skill in attr[1].skills %}
-                <li>{{skill.name|e}}: {{skill.value|safe}}</li>
+                <li>{{skill.name|e}}: {{skill.value|e}}</li>
                 {% if current_row.append(current_row.pop() + 1) %}{% endif %}
                 {% if current_row[0] is divisibleby(column_size) and current_row[0] is not equalto(skill_items) %}</ul>{{new_column|safe}}<ul>{% endif %}
               {% endfor %}

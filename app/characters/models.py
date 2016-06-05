@@ -7,7 +7,7 @@ from .character.attributes import default_attributes, ATTRIBUTES
 class Character(object):
         skills=0;
 
-        def __init__(self, db_data):
+        def __init__(self, db_data, load_all_skills):
             self.name = db_data['name']
             self.user = db_data['user']
             self.id = db_data['id']
@@ -20,14 +20,14 @@ class Character(object):
                 if not self.attributes.get(key).get('skills'):
                     self.attributes[key]['skills'] = []
                 for skill in attr.get('skills'):
-                    if skill not in map(lambda char_skill: char_skill['name'], self.attributes.get(key).get('skills')):
+                    if load_all_skills and skill not in map(lambda char_skill: char_skill['name'], self.attributes.get(key).get('skills')):
                         self.attributes[key]['skills'].append({'name':skill,'value':0})
                 self.attributes[key]['skills'].sort(key=lambda s: s.get('name'))
                 self.skills += len(self.attributes[key]['skills'])
             self.attributes = OrderedDict(sorted(self.attributes.items(), key=lambda a: a[0]))
 
-def load_character(id):
-    character=Character(r.table('characters').get(id).run(g.rdb_conn))
+def load_character(id, load_all_skills=True):
+    character=Character(r.table('characters').get(id).run(g.rdb_conn), load_all_skills)
     return character
 
 def create_new_character(char_data):
