@@ -67,9 +67,11 @@ def character_edit(char_id):
     if form.validate_on_submit():
         char_attributes = {'INT':{'value':form.intelligence.data}, 'REF':{'value':form.reflex.data}, 'TECH':{'value':form.tech.data},
          'COOL':{'value':form.cool.data}, 'ATTR':{'value':form.attractivness.data}, 'LUCK':{'value':form.luck.data}, 'MA':{'value':form.movement_allowance.data}, 'EMP':{'value':form.empathy.data}}
+        print(char_attributes)
         for key in list(char_attributes.keys()):
-            if char_attributes[key].get('value') == 0:
-                char_attributes.pop(key,None)
+            if char_attributes[key].get('value',0) is None:
+                char_attributes[key]['value'] = 0
+        print(char_attributes)
         r.table('characters').get(int(character.id)).update({'name':form.name.data, 'role':form.role.data.lower(), 'attributes':char_attributes}).run(g.rdb_conn)
         return redirect(url_for('character_display', char_id=char_id))
 
@@ -77,14 +79,14 @@ def character_edit(char_id):
     form.role.data = character.role
     char_attributes = character.attributes
     if char_attributes:
-        form.intelligence.data = char_attributes.get('INT').get('value')
-        form.reflex.data = char_attributes.get('REF').get('value')
-        form.tech.data = char_attributes.get('TECH').get('value')
-        form.cool.data = char_attributes.get('COOL').get('value')
-        form.attractivness.data = char_attributes.get('ATTR').get('value')
-        form.luck.data = char_attributes.get('LUCK').get('value')
-        form.movement_allowance.data = char_attributes.get('MA').get('value')
-        form.empathy.data = char_attributes.get('EMP').get('value')
+        form.intelligence.data = char_attributes.get('INT').get('value',0)
+        form.reflex.data = char_attributes.get('REF').get('value',0)
+        form.tech.data = char_attributes.get('TECH').get('value',0)
+        form.cool.data = char_attributes.get('COOL').get('value',0)
+        form.attractivness.data = char_attributes.get('ATTR').get('value',0)
+        form.luck.data = char_attributes.get('LUCK').get('value',0)
+        form.movement_allowance.data = char_attributes.get('MA').get('value',0)
+        form.empathy.data = char_attributes.get('EMP').get('value',0)
     character.id = char_id
     return render_template('characters/characteredit.html', title = 'Edit: ' + character.name, character = character, form=form)
 

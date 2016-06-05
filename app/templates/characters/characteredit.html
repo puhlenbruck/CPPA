@@ -7,14 +7,14 @@
 	{{form.hidden_tag()}}
 	<p>{{form.name.label}}: {{form.name}}<br>
 		{{form.role.label}}: {{form.role}}<br>
-		{{form.intelligence.label}}: {{form.intelligence}} | {{form.intelligence.errors}}<br>
-		{{form.reflex.label}}: {{form.reflex}}<br>
-		{{form.tech.label}}: {{form.tech}}<br>
-		{{form.cool.label}}: {{form.cool}}<br>
-		{{form.attractivness.label}}: {{form.attractivness}}<br>
-		{{form.luck.label}}: {{form.luck}}<br>
-		{{form.movement_allowance.label}}: {{form.movement_allowance}}<br>
-		{{form.empathy.label}}: {{form.empathy}}<br>
+		{{form.intelligence.label}}: {{form.intelligence(size=1)}} | {{form.intelligence.errors}}<br>
+		{{form.reflex.label}}: {{form.reflex(size=1)}}<br>
+		{{form.tech.label}}: {{form.tech(size=1)}}<br>
+		{{form.cool.label}}: {{form.cool(size=1)}}<br>
+		{{form.attractivness.label}}: {{form.attractivness(size=1)}}<br>
+		{{form.luck.label}}: {{form.luck(size=1)}}<br>
+		{{form.movement_allowance.label}}: {{form.movement_allowance(size=1)}}<br>
+		{{form.empathy.label}}: {{form.empathy(size=1)}}<br>
 		<input type="submit" value="Save" class="btn btn-default btn-md">
 		{% for error in form.errors.label %}
 		<span style="color: red;">{{ error }} </span>
